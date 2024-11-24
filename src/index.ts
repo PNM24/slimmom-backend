@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db';
 import userRoutes from './routes/userRoutes';
+import publicRoutes from './routes/publicRoutes';
 import { getProduse } from './controllers/produseController';
 
 dotenv.config();
@@ -15,7 +16,8 @@ app.use(cors());
 app.use(express.json());
 
 // Rute
-app.use('/users', userRoutes);
+app.use('/users', userRoutes); // Rutele pentru utilizatori
+app.use('/public', publicRoutes); // Rutele publice
 app.get('/products', getProduse);
 
 app.get('/', (req, res) => {

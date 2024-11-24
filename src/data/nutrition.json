@@ -1,0 +1,15 @@
+{
+    "daily_kcal_intake": {
+      "male": 2500,
+      "female": 2000
+    },
+    "not_recommended_products": [
+      "Fast food",
+      "Sugary drinks",
+      "High-fat snacks",
+      "Processed meats",
+      "Sugary cereals",
+      "Deep-fried foods",
+      "High-sodium foods"
+    ]
+  }
