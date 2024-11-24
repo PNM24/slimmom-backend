@@ -6,6 +6,7 @@ import userRoutes from './routes/userRoutes';
 import productRoutes from './routes/productRoutes';
 import nutritionRoutes from './routes/nutritionRoutes';
 import consumedProductRoutes from './routes/consumedProductRoutes';
+import authRoutes from './routes/authRoutes';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use('/users', userRoutes);
 app.use('/products', productRoutes);
 app.use('/private', nutritionRoutes);
 app.use('/consumed-products', consumedProductRoutes); // Ruta pentru produse consumate
+app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.send('Slimmom backend is running!');
