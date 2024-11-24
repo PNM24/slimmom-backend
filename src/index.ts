@@ -3,9 +3,10 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db';
 import userRoutes from './routes/userRoutes';
-import publicRoutes from './routes/publicRoutes';
+import productRoutes from './routes/productRoutes';
 import nutritionRoutes from './routes/nutritionRoutes';
-import { getProduse } from './controllers/produseController';
+import consumedProductRoutes from './routes/consumedProductRoutes'; // Adăugăm ruta pentru produsele consumate
+
 
 dotenv.config();
 
@@ -17,10 +18,11 @@ app.use(cors());
 app.use(express.json());
 
 // Rute
-app.use('/users', userRoutes); // Rutele pentru utilizatori
-app.use('/public', publicRoutes); // Rutele publice
-app.use('/private', nutritionRoutes); // Adăugăm ruta protejată
-app.get('/products', getProduse);
+app.use('/users', userRoutes);
+app.use('/products', productRoutes);
+app.use('/private', nutritionRoutes);
+app.use('/consumed-products', consumedProductRoutes); // Ruta pentru produsele consumate
+
 
 app.get('/', (req, res) => {
   res.send('Slimmom backend is running!');

@@ -1,13 +1,13 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
 export interface INutrition extends Document {
-  userId: string; // ID-ul utilizatorului care accesează endpoint-ul
+  userId: string;
   dailyKcalIntake: {
     male: number;
     female: number;
   };
   notRecommendedProducts: string[];
-  accessedAt: Date; // Data accesării
+  accessedAt: Date;
 }
 
 const NutritionSchema: Schema = new Schema({
