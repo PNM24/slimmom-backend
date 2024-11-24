@@ -1,25 +1,30 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { isTokenBlacklisted } from '../utils/tokenBlacklist';
-
 
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 
 export const protect = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1]; // Extragem token-ul din header-ul Authorization
+  const authHeader = req.headers.authorization;
 
-  if (!token) {
+  // Verificăm dacă header-ul Authorization este prezent
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ message: 'No token provided, authorization denied.' });
   }
 
+  // Extragem token-ul
+  const token = authHeader.split(' ')[1];
+
+  // Verificăm dacă token-ul este în lista neagră
   if (isTokenBlacklisted(token)) {
     return res.status(401).json({ message: 'Token is invalidated, please log in again.' });
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // Adăugăm utilizatorul decodat la request
-    next();
+    // Verificăm și decodăm token-ul
+    const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+    req.user = decoded; // Setăm user-ul decodat pe request
+    next(); // Continuăm către următorul middleware
   } catch (error) {
     return res.status(401).json({ message: 'Invalid token, authorization denied.' });
   }
