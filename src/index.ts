@@ -4,6 +4,7 @@ import cors from 'cors';
 import connectDB from './config/db';
 import userRoutes from './routes/userRoutes';
 import publicRoutes from './routes/publicRoutes';
+import nutritionRoutes from './routes/nutritionRoutes';
 import { getProduse } from './controllers/produseController';
 
 dotenv.config();
@@ -18,6 +19,7 @@ app.use(express.json());
 // Rute
 app.use('/users', userRoutes); // Rutele pentru utilizatori
 app.use('/public', publicRoutes); // Rutele publice
+app.use('/private', nutritionRoutes); // Adăugăm ruta protejată
 app.get('/products', getProduse);
 
 app.get('/', (req, res) => {
