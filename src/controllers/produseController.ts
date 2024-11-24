@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import products from '../data/products.json';
 
+
 export const getProduse = (req: Request, res: Response) => {
   try {
     res.status(200).json(products);
