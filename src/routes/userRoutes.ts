@@ -6,6 +6,7 @@ import {
   deleteUser,
   registerUser,
   loginUser,
+  logoutUser,
 } from '../controllers/userController';
 import { protect } from '../middlewares/authMiddleware';
 
@@ -22,5 +23,7 @@ router.post('/register', registerUser);
 // Endpoint pentru autentificare
 router.post('/login', loginUser);
 
+// Endpoint pentru deconectare
+router.post('/logout', protect, logoutUser); // Protejat pentru a asigura autentificarea
 
 export default router;

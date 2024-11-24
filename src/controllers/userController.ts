@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel';
+import { addToBlacklist } from '../utils/tokenBlacklist';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 
@@ -77,6 +78,24 @@ export const loginUser = async (req: Request, res: Response) => {
     });
   } catch (error) {
     res.status(500).json({ message: 'Error logging in.', error });
+  }
+};
+
+// Deconectare utilizator
+export const logoutUser = (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization?.split(' ')[1]; // Extragem token-ul din header
+
+    if (!token) {
+      return res.status(400).json({ message: 'No token provided.' });
+    }
+
+    // Adăugăm token-ul în lista de blacklist
+    addToBlacklist(token);
+
+    res.status(200).json({ message: 'User logged out successfully.' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error logging out.', error });
   }
 };
 

@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { isTokenBlacklisted } from '../utils/tokenBlacklist';
+
 
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret';
 
@@ -8,6 +10,10 @@ export const protect = (req: Request, res: Response, next: NextFunction) => {
 
   if (!token) {
     return res.status(401).json({ message: 'No token provided, authorization denied.' });
+  }
+
+  if (isTokenBlacklisted(token)) {
+    return res.status(401).json({ message: 'Token is invalidated, please log in again.' });
   }
 
   try {
