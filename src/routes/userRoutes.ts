@@ -7,10 +7,11 @@ import {
   registerUser,
   loginUser,
 } from '../controllers/userController';
+import { protect } from '../middlewares/authMiddleware';
 
 const router = Router();
 
-router.get('/', getUsers);
+router.get('/', protect, getUsers);
 router.post('/', createUser);
 router.put('/:id', updateUser);
 router.delete('/:id', deleteUser);
@@ -20,5 +21,6 @@ router.post('/register', registerUser);
 
 // Endpoint pentru autentificare
 router.post('/login', loginUser);
+
 
 export default router;

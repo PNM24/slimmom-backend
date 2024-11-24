@@ -82,7 +82,12 @@ export const loginUser = async (req: Request, res: Response) => {
 
 // Alte funcții (placeholder pentru moment)
 export const getUsers = async (req: Request, res: Response) => {
-  res.status(200).json({ message: 'Get users not implemented yet.' });
+  try {
+    const users = await User.find().select('-password'); // Excludem parola din răspuns
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching users.', error });
+  }
 };
 export const createUser = async (req: Request, res: Response) => {
   res.status(200).json({ message: 'Create user not implemented yet.' });
